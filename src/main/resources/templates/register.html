@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>iMeserias - Register</title>
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.css" />
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+    <!-- font awesome style -->
+    <link href="../static/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="../static/css/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="../static/css/responsive.css" rel="stylesheet" />
+    <!-- nice select -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
+    <style>
+        .register_form .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .register_form label {
+            display: block;
+            margin-bottom: .5rem;
+        }
+        .register_form .nice-select {
+            width: 100%;
+        }
+
+        .marginJos{
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+
+<body class="sub_page">
+
+<div class="hero_area">
+    <!-- header section starts -->
+    <header class="header_section">
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg custom_nav-container ">
+                <a class="navbar-brand" href="index.html">
+                    <span>iMeserias</span>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class=""> </span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav  ml-auto">
+                        <li class="nav-item ">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="freelancer.html">Meseriasi</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="login.html">Login</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="register.html">Sign Up</a>
+                        </li>
+                        <form class="form-inline">
+                            <button class="btn nav_search-btn" type="submit">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </form>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!-- end header section -->
+</div>
+
+<!-- register section -->
+<section class="register_section layout_padding">
+    <div class="container">
+        <div class="heading_container heading_center">
+            <h2>Register</h2>
+            <p>Create a new account to join our community</p>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="register_form">
+                    <div th:if="${param.logout}" class="alert alert-success">
+                       Username sau email deja folosite.
+                    </div>
+                    <form th:action="@{/register/save}" method="post" th:object="${user}">
+                        <div class="form-group">
+                            <label for="username">Name:</label>
+                            <input type="text" class="form-control" id="username" name="username" th:field="*{username}" placeholder="Introduceti username-ul" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Introduceti adresa de email" th:field="*{email}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Introduceti parola" th:field="*{password}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm_password">Confirm Password:</label>
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirma parola ta" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="user_type">Ce tip de cont doresti?</label>
+                            <select class="form-control marginJos" id="user_type" name="user_type" required>
+                                <option value="" disabled selected>Select user type</option>
+                                <option value="client">Client</option>
+                                <option value="meserias">Meserias</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                        </div>
+                        <p class="text-center">Already have an account? <a href="login.html">Log in here</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end register section -->
+
+<!-- info section -->
+<section class="info_section ">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 info_links">
+                <h4>Menu</h4>
+                <ul>
+                    <li>
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="about.html">About</a>
+                    </li>
+                    <li>
+                        <a href="job.html">Jobs</a>
+                    </li>
+                    <li>
+                        <a href="freelancer.html">Freelancers</a>
+                    </li>
+                    <li>
+                        <a href="login.html">Login</a>
+                    </li>
+                    <li>
+                        <a href="register.html">Sign Up</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h4>Jobs</h4>
+                <p>Established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum</p>
+            </div>
+            <div class="col-md-3">
+                <div class="info_social">
+                    <h4>Social Link</h4>
+                    <div class="social_container">
+                        <div>
+                            <a href=""><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                        </div>
+                        <div>
+                            <a href=""><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                        </div>
+                        <div>
+                            <a href=""><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                        </div>
+                        <div>
+                            <a href=""><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="info_form">
+                    <h4>Newsletter</h4>
+                    <form action="">
+                        <input type="text" placeholder="Enter Your Email" />
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end info section -->
+
+<!-- footer section -->
+<footer class="footer_section">
+    <div class="container">
+        <p>&copy; <span id="displayYear"></span> All Rights Reserved By <a href="https://html.design/">Free Html Templates</a></p>
+    </div>
+</footer>
+<!-- end footer section -->
+
+<!-- jQery -->
+<script src="../static/js/jquery-3.4.1.min.js"></script>
+<!-- bootstrap js -->
+<script src="../static/js/bootstrap.js"></script>
+<!-- nice select js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha256-Zr3vByTlMGQhvMfgkQ5BtWRSKBGa2QlspKYJnkjZTmo=" crossorigin="anonymous"></script>
+<!-- custom js -->
+<script src="../static/js/custom.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('select').niceSelect();
+    });
+</script>
+
+</body>
+
+</html>
