@@ -25,7 +25,6 @@ public class AuthController {
         model.addAttribute("user",user);
         return "register";
     }
-
     @GetMapping("/login")
     public String loginPage(){
         return "login";
@@ -34,11 +33,11 @@ public class AuthController {
     public String register(@Valid @ModelAttribute("user")RegistrationDto user, BindingResult result, Model model){
         Utilizator mailUtilizatorExistent = utilizatorService.findByEmail(user.getEmail());
         if(mailUtilizatorExistent != null && mailUtilizatorExistent.getEmail() != null && !mailUtilizatorExistent.getEmail().isEmpty()){
-            result.rejectValue("email", "Deja exista un utilizator cu acest mail!");
+            return "redirect:/register?fail";
         }
         Utilizator usernameUtilizatorExistent = utilizatorService.findByUsername(user.getUsername());
         if(usernameUtilizatorExistent != null && usernameUtilizatorExistent.getUsername() != null && !usernameUtilizatorExistent.getUsername().isEmpty()){
-            result.rejectValue("username", "Deja exista un utilizator cu acest username!");
+            return "redirect:/register?fail";
         }
         if(result.hasErrors()){
             model.addAttribute("user", user);

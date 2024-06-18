@@ -1,73 +1,23 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="ro">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Hirevac - Login</title>
-
-    <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.css" />
+    <title>iMeserias-Login</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css" />
     <!-- fonts style -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
     <!-- font awesome style -->
-    <link href="../static/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <!-- Custom styles for this template -->
-    <link href="../static/css/style.css" rel="stylesheet" />
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css"/>
     <!-- responsive style -->
-    <link href="../static/css/responsive.css" rel="stylesheet" />
+    <link href="/static/css/responsive.css" rel="stylesheet" type="text/css"/>
 </head>
 
 <body class="sub_page">
-
-<div class="hero_area">
-    <!-- header section starts -->
-    <header class="header_section">
-        <div class="container-fluid">
-            <nav class="navbar navbar-expand-lg custom_nav-container ">
-                <a class="navbar-brand" href="index.html">
-                    <span>Hirevac</span>
-                </a>
-
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class=""> </span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav  ml-auto">
-                        <li class="nav-item ">
-                            <a class="nav-link" href="index.html">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="about.html">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="job.html">Jobs</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="freelancer.html">Freelancers</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="login.html">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="register.html">Sign Up</a>
-                        </li>
-                        <form class="form-inline">
-                            <button class="btn nav_search-btn" type="submit">
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                            </button>
-                        </form>
-                    </ul>
-                </div>
-            </nav>
-        </div>
-    </header>
-    <!-- end header section -->
-</div>
-
-<!-- login section -->
+<div th:replace="~{/navbar.html ::navbar}"></div><!-- login section -->
 <section class="login_section layout_padding">
     <div class="container">
         <div class="heading_container heading_center">
@@ -95,8 +45,8 @@
                         <div class="form-group">
                             <button type="submit" value="Log in" class="btn btn-primary btn-block">Login</button>
                         </div>
-                        <button th:href="@{/register}" type="submit" class="btn btn-secondary">Inregistreaza-te aici!</button>
                     </form>
+                    <button th:href="@{/register}" class="btn btn-secondary">Inregistreaza-te aici!</button>
                 </div>
             </div>
         </div>
@@ -177,11 +127,11 @@
 <!-- end footer section -->
 
 <!-- jQery -->
-<script src="../static/js/jquery-3.4.1.min.js"></script>
+<script src="/static/js/jquery-3.4.1.min.js" type="text/javascript"></script>
 <!-- bootstrap js -->
-<script src="../static/js/bootstrap.js"></script>
+<script src="/static/js/bootstrap.js"></script>
 <!-- custom js -->
-<script src="../static/js/custom.js"></script>
+<script src="/static/js/custom.js"></script>
 
 </body>
 

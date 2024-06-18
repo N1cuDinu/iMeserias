@@ -39,45 +39,7 @@
 
 <body class="sub_page">
 
-<div class="hero_area">
-    <!-- header section starts -->
-    <header class="header_section">
-        <div class="container-fluid">
-            <nav class="navbar navbar-expand-lg custom_nav-container ">
-                <a class="navbar-brand" href="index.html">
-                    <span>iMeserias</span>
-                </a>
-
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class=""> </span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav  ml-auto">
-                        <li class="nav-item ">
-                            <a class="nav-link" href="index.html">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="freelancer.html">Meseriasi</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="login.html">Login</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="register.html">Sign Up</a>
-                        </li>
-                        <form class="form-inline">
-                            <button class="btn nav_search-btn" type="submit">
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                            </button>
-                        </form>
-                    </ul>
-                </div>
-            </nav>
-        </div>
-    </header>
-    <!-- end header section -->
-</div>
+<div th:replace="~{/navbar.html ::navbar}"></div>
 
 <!-- register section -->
 <section class="register_section layout_padding">
@@ -89,7 +51,7 @@
         <div class="row">
             <div class="col-md-6 mx-auto">
                 <div class="register_form">
-                    <div th:if="${param.logout}" class="alert alert-success">
+                    <div th:if="${param.fail}" class="alert alert-success">
                        Username sau email deja folosite.
                     </div>
                     <form th:action="@{/register/save}" method="post" th:object="${user}">
@@ -111,16 +73,16 @@
                         </div>
                         <div class="form-group">
                             <label for="user_type">Ce tip de cont doresti?</label>
-                            <select class="form-control marginJos" id="user_type" name="user_type" required>
+                            <select class="form-control marginJos" id="user_type" name="user_type" th:field="*{tipCont}" required>
                                 <option value="" disabled selected>Select user type</option>
                                 <option value="client">Client</option>
                                 <option value="meserias">Meserias</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                            <button th:href="@{/register}" type="submit" class="btn btn-primary btn-block">Register</button>
                         </div>
-                        <p class="text-center">Already have an account? <a href="login.html">Log in here</a></p>
+                        <button th:href="@{/login}" type="submit" class="btn btn-primary btn-block">Ai deja cont? Conecteaza-te</button>
                     </form>
                 </div>
             </div>

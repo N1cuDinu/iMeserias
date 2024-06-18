@@ -9,6 +9,11 @@ import dinu.imeserias.service.UtilizatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 @Service
 public class UtilizatorServiceImpl implements UtilizatorService {
     private UtilizatoriRepository utilizatoriRepository;
@@ -19,14 +24,19 @@ public class UtilizatorServiceImpl implements UtilizatorService {
         this.rolRepository = rolRepository;
     }
 
+    public Timestamp getActualTime(){
+        Calendar cal = Calendar.getInstance();
+        java.sql.Timestamp timestamp = new java.sql.Timestamp(cal.getTimeInMillis());
+        return timestamp;
+    }
     @Override
     public void saveUser(RegistrationDto registrationDto) {
         Utilizator user = new Utilizator();
         user.setUsername(registrationDto.getUsername());
         user.setEmail(registrationDto.getEmail());
         user.setPassword(registrationDto.getPassword());
-        Rol rol = rolRepository.getRolByNumeRol("USER");
-        user.setIdRol(rol.getIdrol());
+        user.setTipCont(registrationDto.getTipCont());
+        user.setDataSignUp(getActualTime());
         utilizatoriRepository.save(user);
     }
 

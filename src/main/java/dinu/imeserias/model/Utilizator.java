@@ -19,8 +19,8 @@ public class Utilizator {
     @Column(name = "iduser")
     private int iduser;
     @Basic
-    @Column(name = "idRol")
-    private int idRol;
+    @Column(name = "tipCont")
+    private String tipCont;
     @Basic
     @Column(name = "email")
     private String email;
@@ -44,7 +44,7 @@ public class Utilizator {
         if (iduser != that.iduser) return false;
         if (username != null ? !username.equals(that.username) : that.username != null) return false;
         if (password != null ? !password.equals(that.password) : that.password != null) return false;
-        if (idRol != that.idRol) return false;
+        if (tipCont != null ? !tipCont.equals(that.tipCont) : that.tipCont != null) return false;
         if (dataSignUp != null ? !dataSignUp.equals(that.dataSignUp) : that.dataSignUp != null) return false;
 
         return true;
@@ -55,7 +55,7 @@ public class Utilizator {
         int result = iduser;
         result = 31 * result + (username != null ? username.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + idRol;
+        result = 31 * result + (tipCont != null ? tipCont.hashCode() : 0);
         result = 31 * result + (dataSignUp != null ? dataSignUp.hashCode() : 0);
         return result;
     }
