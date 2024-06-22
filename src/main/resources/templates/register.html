@@ -54,7 +54,7 @@
                     <div th:if="${param.fail}" class="alert alert-success">
                        Username sau email deja folosite.
                     </div>
-                    <form th:action="@{/register/save}" method="post" th:object="${user}">
+                    <form th:action="@{/register/save}" th:method="post" th:object="${user}">
                         <div class="form-group">
                             <label for="username">Name:</label>
                             <input type="text" class="form-control" id="username" name="username" th:field="*{username}" placeholder="Introduceti username-ul" required>
@@ -92,67 +92,7 @@
 <!-- end register section -->
 
 <!-- info section -->
-<section class="info_section ">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-2 info_links">
-                <h4>Menu</h4>
-                <ul>
-                    <li>
-                        <a href="index.html">Home</a>
-                    </li>
-                    <li>
-                        <a href="about.html">About</a>
-                    </li>
-                    <li>
-                        <a href="job.html">Jobs</a>
-                    </li>
-                    <li>
-                        <a href="freelancer.html">Freelancers</a>
-                    </li>
-                    <li>
-                        <a href="login.html">Login</a>
-                    </li>
-                    <li>
-                        <a href="register.html">Sign Up</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-md-3">
-                <h4>Jobs</h4>
-                <p>Established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum</p>
-            </div>
-            <div class="col-md-3">
-                <div class="info_social">
-                    <h4>Social Link</h4>
-                    <div class="social_container">
-                        <div>
-                            <a href=""><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                        </div>
-                        <div>
-                            <a href=""><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                        </div>
-                        <div>
-                            <a href=""><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                        </div>
-                        <div>
-                            <a href=""><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="info_form">
-                    <h4>Newsletter</h4>
-                    <form action="">
-                        <input type="text" placeholder="Enter Your Email" />
-                        <button type="submit">Subscribe</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+<div th:replace="~{/navbar.html ::footer}"></div>
 <!-- end info section -->
 
 <!-- footer section -->

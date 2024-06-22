@@ -19,11 +19,20 @@
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/anunturi}">Anunturi</a>
                         </li>
-                        <li class="nav-item active">
+                        <li th:if="${!#authentication.principal.anuntExist and #authentication.principal.authorities.contains('ROLE_MESERIAS')}" class="nav-item">
+                            <a class="nav-link" th:href="@{/adauga-anunt}">Adaugă Anunț</a>
+                        </li>
+                        <li th:if="${#authentication.principal.anuntExist and #authentication.principal.authorities.contains('ROLE_MESERIAS')}" class="nav-item">
+                            <a class="nav-link" th:href="@{/editare-anunt}">Editare Anunț</a>
+                        </li>
+                        <li th:if="${!#authentication.isAuthenticated()}" class="nav-item active">
                             <a class="nav-link" th:href="@{/login}">Login</a>
                         </li>
-                        <li class="nav-item">
+                        <li th:if="${!#authentication.isAuthenticated()}" class="nav-item">
                             <a class="nav-link" th:href="@{/register}">Sign Up</a>
+                        </li>
+                        <li th:if="${#authentication.isAuthenticated()}" class="nav-item">
+                            <a class="nav-link" th:href="@{/logout}">Logout</a>
                         </li>
                         <form class="form-inline">
                             <button class="btn nav_search-btn" type="submit">
@@ -36,4 +45,92 @@
         </div>
     </header>
     <!-- end header section -->
+</div>
+
+
+<div th:fragment="footer">
+    <section class="info_section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2 info_links">
+                    <h4>
+                        Menu
+                    </h4>
+                    <ul>
+                        <li>
+                            <a href="index.html">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="about.html">
+                                About
+                            </a>
+                        </li>
+                        <li>
+                            <a href="job.html">
+                                Jobs
+                            </a>
+                        </li>
+                        <li>
+                            <a class="active" href="freelancer.html">
+                                Freelancers
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h4>
+                        Jobs
+                    </h4>
+                    <p>
+                        Established fact that a reader will be distracted by the readable content of a page when looking at its
+                        layout. The point of using Lorem Ipsum
+                    </p>
+                </div>
+                <div class="col-md-3">
+                    <div class="info_social">
+                        <h4>
+                            Social Link
+                        </h4>
+                        <div class="social_container">
+                            <div>
+                                <a href="">
+                                    <i class="fa fa-facebook" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                            <div>
+                                <a href="">
+                                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                            <div>
+                                <a href="">
+                                    <i class="fa fa-linkedin" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                            <div>
+                                <a href="">
+                                    <i class="fa fa-instagram" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="info_form">
+                        <h4>
+                            Newsletter
+                        </h4>
+                        <form action="">
+                            <input type="text" placeholder="Enter Your Email" />
+                            <button type="submit">
+                                Subscribe
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>

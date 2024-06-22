@@ -1,3 +1,4 @@
+/*
 package dinu.imeserias.security;
 
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -51,3 +52,4 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
+*/
