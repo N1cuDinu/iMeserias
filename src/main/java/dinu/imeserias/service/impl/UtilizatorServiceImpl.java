@@ -1,52 +1,63 @@
 package dinu.imeserias.service.impl;
 
 import dinu.imeserias.dto.RegistrationDto;
-import dinu.imeserias.model.Rol;
-import dinu.imeserias.model.Utilizator;
-import dinu.imeserias.repository.RolRepository;
+import dinu.imeserias.enums.RoluriEnum;
+import dinu.imeserias.helpers.TimeHelper;
+import dinu.imeserias.model.Utilizatori;
 import dinu.imeserias.repository.UtilizatoriRepository;
 import dinu.imeserias.service.UtilizatorService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 @Service
 public class UtilizatorServiceImpl implements UtilizatorService {
     private UtilizatoriRepository utilizatoriRepository;
-    private RolRepository rolRepository;
+    private PasswordEncoder passwordEncoder;
+    TimeHelper timeHelper;
+
     @Autowired
-    public UtilizatorServiceImpl(UtilizatoriRepository utilizatoriRepository, RolRepository rolRepository) {
+    public UtilizatorServiceImpl(UtilizatoriRepository utilizatoriRepository, PasswordEncoder passwordEncoder) {
         this.utilizatoriRepository = utilizatoriRepository;
-        this.rolRepository = rolRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    public Timestamp getActualTime(){
-        Calendar cal = Calendar.getInstance();
-        java.sql.Timestamp timestamp = new java.sql.Timestamp(cal.getTimeInMillis());
-        return timestamp;
-    }
     @Override
     public void saveUser(RegistrationDto registrationDto) {
-        Utilizator user = new Utilizator();
-        user.setUsername(registrationDto.getUsername());
+        Utilizatori user = new Utilizatori();
+        user.setTipUtilizator(registrationDto.getTipCont());
         user.setEmail(registrationDto.getEmail());
-        user.setPassword(registrationDto.getPassword());
-        user.setTipCont(registrationDto.getTipCont());
-        user.setDataSignUp(getActualTime());
+        user.setUsername(registrationDto.getUsername());
+        user.setPassword(passwordEncoder.encode(registrationDto.getPassword())); // Criptarea parolei
+        user.setDataSignUp(timeHelper.getActualTime());
         utilizatoriRepository.save(user);
     }
 
     @Override
-    public Utilizator findByEmail(String email) {
+    public Utilizatori findByEmail(String email) {
         return utilizatoriRepository.findByEmail(email);
     }
 
     @Override
-    public Utilizator findByUsername(String username) {
+    public Utilizatori findByUsername(String username) {
         return utilizatoriRepository.findByUsername(username);
+    }
+
+    @Override
+    public List<String> roluri() {
+        RoluriEnum[] roluri = RoluriEnum.values();
+        List<String> listRoluri = new ArrayList<>();
+        for (RoluriEnum roluriEnum : Arrays.stream(roluri).toList()) {
+            if (!roluriEnum.getNumeRol().equals("ADMIN")) {
+                listRoluri.add(roluriEnum.getNumeRol());
+            }
+        }
+        return listRoluri;
     }
 }

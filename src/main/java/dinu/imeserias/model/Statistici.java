@@ -1,15 +1,19 @@
 package dinu.imeserias.model;
 
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import jakarta.persistence.*;
-@Entity
+@Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Table(name = "statistici", schema = "imeserias")
+@Entity
 public class Statistici {
     @Basic
     @Column(name = "idanunt")

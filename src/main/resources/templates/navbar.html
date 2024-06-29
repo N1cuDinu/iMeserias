@@ -12,26 +12,26 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav  ml-auto">
-                        <li class="nav-item ">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
                             <a class="nav-link" th:href="@{/index}">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/anunturi}">Anunturi</a>
                         </li>
-                        <li th:if="${!#authentication.principal.anuntExist and #authentication.principal.authorities.contains('ROLE_MESERIAS')}" class="nav-item">
-                            <a class="nav-link" th:href="@{/adauga-anunt}">Adaugă Anunț</a>
+                        <li th:if="${#authentication && #authentication.principal && !#authentication.principal.anuntExist and #authentication.principal.authorities.contains('ROLE_MESERIAS')}" class="nav-item">
+                            <a class="nav-link" th:href="@{/anunturi/new}">Adaugă Anunț</a>
                         </li>
-                        <li th:if="${#authentication.principal.anuntExist and #authentication.principal.authorities.contains('ROLE_MESERIAS')}" class="nav-item">
-                            <a class="nav-link" th:href="@{/editare-anunt}">Editare Anunț</a>
+                        <li th:if="${#authentication && #authentication.principal && #authentication.principal.anuntExist and #authentication.principal.authorities.contains('ROLE_MESERIAS')}" class="nav-item">
+                            <a class="nav-link" th:href="@{/editare-anunturi}">Editare Anunț</a>
                         </li>
-                        <li th:if="${!#authentication.isAuthenticated()}" class="nav-item active">
+                        <li th:if="${#authentication && !#authentication.isAuthenticated()}" class="nav-item active">
                             <a class="nav-link" th:href="@{/login}">Login</a>
                         </li>
-                        <li th:if="${!#authentication.isAuthenticated()}" class="nav-item">
+                        <li th:if="${#authentication && !#authentication.isAuthenticated()}" class="nav-item">
                             <a class="nav-link" th:href="@{/register}">Sign Up</a>
                         </li>
-                        <li th:if="${#authentication.isAuthenticated()}" class="nav-item">
+                        <li th:if="${#authentication && #authentication.isAuthenticated()}" class="nav-item">
                             <a class="nav-link" th:href="@{/logout}">Logout</a>
                         </li>
                         <form class="form-inline">
@@ -46,6 +46,7 @@
     </header>
     <!-- end header section -->
 </div>
+
 
 
 <div th:fragment="footer">

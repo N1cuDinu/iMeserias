@@ -1,17 +1,16 @@
 package dinu.imeserias.model;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import jakarta.persistence.*;
-
-
-@Entity
+@Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Table(name = "reviewuri", schema = "imeserias")
+@Entity
 public class Reviewuri {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -20,6 +19,9 @@ public class Reviewuri {
     @Basic
     @Column(name = "idanunt")
     private int idanunt;
+    @Basic
+    @Column(name = "idUser")
+    private int idUser;
     @Basic
     @Column(name = "stars")
     private int stars;
@@ -43,6 +45,14 @@ public class Reviewuri {
         this.idanunt = idanunt;
     }
 
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
+    }
+
     public int getStars() {
         return stars;
     }
@@ -64,12 +74,13 @@ public class Reviewuri {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Reviewuri that = (Reviewuri) o;
+        Reviewuri reviewuri = (Reviewuri) o;
 
-        if (idreview != that.idreview) return false;
-        if (idanunt != that.idanunt) return false;
-        if (stars != that.stars) return false;
-        if (descrierereview != null ? !descrierereview.equals(that.descrierereview) : that.descrierereview != null)
+        if (idreview != reviewuri.idreview) return false;
+        if (idanunt != reviewuri.idanunt) return false;
+        if (idUser != reviewuri.idUser) return false;
+        if (stars != reviewuri.stars) return false;
+        if (descrierereview != null ? !descrierereview.equals(reviewuri.descrierereview) : reviewuri.descrierereview != null)
             return false;
 
         return true;
@@ -79,6 +90,7 @@ public class Reviewuri {
     public int hashCode() {
         int result = idreview;
         result = 31 * result + idanunt;
+        result = 31 * result + idUser;
         result = 31 * result + stars;
         result = 31 * result + (descrierereview != null ? descrierereview.hashCode() : 0);
         return result;

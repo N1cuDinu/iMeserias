@@ -23,8 +23,6 @@
 
     <!-- font awesome style -->
     <link href="../static/css/font-awesome.min.css" rel="stylesheet" />
-    <!-- nice select -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
 
     <!-- Custom styles for this template -->
     <link href="../static/css/style.css" rel="stylesheet" />
@@ -47,23 +45,18 @@
         <div class="heading_container heading_center">
             <h2>Cauta meseriasi</h2>
             <form action="#" th:action="@{/search}" method="get">
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <select class="form-control nice-select"> <!--th:field="*{}"-->
+                <div class="row">
+                        <select class="form-select-sm nice-select"> <!--th:field="*{}"-->
                             <option value="">Select Service</option>
                             <!-- Iterează prin servicii disponibile -->
                             <option th:each="serviciu : ${servicii}" th:value="${serviciu.id}" th:text="${serviciu.nume}"></option>
                         </select>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <select class="form-control nice-select"> <!--th:field="*{localizare}"-->>
+                        <select class="form-select-sm nice-select"> <!--th:field="*{localizare}"-->>
                             <option value="">Select Location</option>
                             <!-- Iterează prin localități disponibile -->
                             <option th:each="loc : ${localitati}" th:value="${loc.id}" th:text="${loc.nume}"></option>
                         </select>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <select class="form-control nice-select"> <!--th:field="*{reviewStars}"-->
+                        <select class="form-select-sm nice-select"> <!--th:field="*{reviewStars}"-->
                             <option value="">Select Rating</option>
                             <option value="1">1 Star</option>
                             <option value="2">2 Stars</option>
@@ -71,9 +64,8 @@
                             <option value="4">4 Stars</option>
                             <option value="5">5 Stars</option>
                         </select>
-                    </div>
                 </div>
-                <button type="submit" class="btn">Search</button>
+                <button type="submit" class="btn btn-primary">Search</button>
             </form>
         </div>
             <div th:if="${anunturi.isEmpty()}" class="alert alert-info text-center">
@@ -81,15 +73,15 @@
             </div>
 
             <div class="row" th:unless="${anunturi.isEmpty()}">
-                <div th:each="anunt : ${anunturi}" class="col-md-6 col-lg-4 mx-auto">
+                <div th:each="anunturi : ${anunturi}" class="col-md-6 col-lg-4 mx-auto">
                     <div class="box">
                         <div class="detail-box">
-                            <a th:href="@{'/meserias/' + ${anunt.iduser}}">
-                                <h5 th:text="${anunt.numeAnunt}">Nume Meseriaș</h5>
+                            <a th:href="@{'/meserias/' + ${anunturi.iduser}}">
+                                <h5 th:text="${anunturi.numeAnunt}">Nume Meseriaș</h5>
                             </a>
-                            <p th:text="${anunt.descriereAnunt}">Descriere...</p>
-                            <p th:text="${anunt.localizare}">Localitate</p>
-                            <p th:text="${anunt.numarTelefon}">Numar Telefon</p>
+                            <p th:text="${anunturi.descriereAnunt}">Descriere...</p>
+                            <p th:text="${anunturi.localizare}">Localitate</p>
+                            <p th:text="${anunturi.numarTelefon}">Numar Telefon</p>
                         </div>
                     </div>
                 </div>
@@ -121,11 +113,9 @@
 <!-- footer section -->
 
 <!-- jQery -->
-<script src="../static/js/jquery-3.4.1.min.js"></script>
+<script src="../static/js/jquery-3.7.1.min.js"></script>
 <!-- bootstrap js -->
 <script src="../static/js/bootstrap.js"></script>
-<!-- nice select -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha256-Zr3vByTlMGQhvMfgkQ5BtWRSKBGa2QlspKYJnkjZTmo=" crossorigin="anonymous"></script>
 <!-- custom js -->
 <script src="../static/js/custom.js"></script>
 

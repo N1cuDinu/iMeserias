@@ -1,17 +1,20 @@
 package dinu.imeserias.model;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import jakarta.persistence.*;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
-@Entity
+@Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Table(name = "anunturi", schema = "imeserias")
+@Entity
 public class Anunturi {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -26,9 +29,13 @@ public class Anunturi {
     @Basic
     @Column(name = "descriereAnunt")
     private String descriereAnunt;
-    @Basic
-    @Column(name = "idserviciu")
-    private int idserviciu;
+    @ManyToMany
+    @JoinTable(
+            name = "anunturi_servicii",
+            joinColumns = @JoinColumn(name = "idanunt"),
+            inverseJoinColumns = @JoinColumn(name = "idserviciu")
+    )
+    private Set<Servicii> servicii = new HashSet<>();
     @Basic
     @Column(name = "dataAdaugare")
     private Timestamp dataAdaugare;
@@ -41,6 +48,8 @@ public class Anunturi {
     @Basic
     @Column(name = "numarTelefon")
     private String numarTelefon;
+
+
 
     public int getIdanunt() {
         return idanunt;
@@ -74,14 +83,13 @@ public class Anunturi {
         this.descriereAnunt = descriereAnunt;
     }
 
-    public int getIdserviciu() {
-        return idserviciu;
+    public Set<Servicii> getServicii() {
+        return servicii;
     }
 
-    public void setIdserviciu(int idserviciu) {
-        this.idserviciu = idserviciu;
+    public void setServicii(Set<Servicii> servicii) {
+        this.servicii = servicii;
     }
-
     public Timestamp getDataAdaugare() {
         return dataAdaugare;
     }
@@ -119,19 +127,20 @@ public class Anunturi {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Anunturi that = (Anunturi) o;
+        Anunturi anunturi = (Anunturi) o;
 
-        if (idanunt != that.idanunt) return false;
-        if (iduser != that.iduser) return false;
-        if (idserviciu != that.idserviciu) return false;
-        if (localizare != that.localizare) return false;
-        if (numeAnunt != null ? !numeAnunt.equals(that.numeAnunt) : that.numeAnunt != null) return false;
-        if (descriereAnunt != null ? !descriereAnunt.equals(that.descriereAnunt) : that.descriereAnunt != null)
+        if (idanunt != anunturi.idanunt) return false;
+        if (iduser != anunturi.iduser) return false;
+        if (localizare != anunturi.localizare) return false;
+        if (numeAnunt != null ? !numeAnunt.equals(anunturi.numeAnunt) : anunturi.numeAnunt != null) return false;
+        if (descriereAnunt != null ? !descriereAnunt.equals(anunturi.descriereAnunt) : anunturi.descriereAnunt != null)
             return false;
-        if (dataAdaugare != null ? !dataAdaugare.equals(that.dataAdaugare) : that.dataAdaugare != null) return false;
-        if (dataActualizare != null ? !dataActualizare.equals(that.dataActualizare) : that.dataActualizare != null)
+        if (dataAdaugare != null ? !dataAdaugare.equals(anunturi.dataAdaugare) : anunturi.dataAdaugare != null)
             return false;
-        if (numarTelefon != null ? !numarTelefon.equals(that.numarTelefon) : that.numarTelefon != null) return false;
+        if (dataActualizare != null ? !dataActualizare.equals(anunturi.dataActualizare) : anunturi.dataActualizare != null)
+            return false;
+        if (numarTelefon != null ? !numarTelefon.equals(anunturi.numarTelefon) : anunturi.numarTelefon != null)
+            return false;
 
         return true;
     }
@@ -142,7 +151,6 @@ public class Anunturi {
         result = 31 * result + iduser;
         result = 31 * result + (numeAnunt != null ? numeAnunt.hashCode() : 0);
         result = 31 * result + (descriereAnunt != null ? descriereAnunt.hashCode() : 0);
-        result = 31 * result + idserviciu;
         result = 31 * result + (dataAdaugare != null ? dataAdaugare.hashCode() : 0);
         result = 31 * result + (dataActualizare != null ? dataActualizare.hashCode() : 0);
         result = 31 * result + localizare;

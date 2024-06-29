@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8" />
@@ -17,8 +17,6 @@
     <link href="../static/css/style.css" rel="stylesheet" />
     <!-- responsive style -->
     <link href="../static/css/responsive.css" rel="stylesheet" />
-    <!-- nice select -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
     <style>
         .register_form .form-group {
             margin-bottom: 1.5rem;
@@ -51,7 +49,7 @@
         <div class="row">
             <div class="col-md-6 mx-auto">
                 <div class="register_form">
-                    <div th:if="${param.fail}" class="alert alert-success">
+                    <div th:if="${param.fail}" class="alert alert-danger">
                        Username sau email deja folosite.
                     </div>
                     <form th:action="@{/register/save}" th:method="post" th:object="${user}">
@@ -72,17 +70,17 @@
                             <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirma parola ta" required>
                         </div>
                         <div class="form-group">
-                            <label for="user_type">Ce tip de cont doresti?</label>
-                            <select class="form-control marginJos" id="user_type" name="user_type" th:field="*{tipCont}" required>
-                                <option value="" disabled selected>Select user type</option>
-                                <option value="client">Client</option>
-                                <option value="meserias">Meserias</option>
+                            <label for="tipCont">Ce tip de cont doresti?</label>
+                            <select name="tipCont" id="tipCont" th:field="*{tipCont}">
+                                <option th:each="role : ${roles}"
+                                        th:value="${role}"
+                                        th:text="${role}">
+                                    Role
+                                </option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <button th:href="@{/register}" type="submit" class="btn btn-primary btn-block">Register</button>
-                        </div>
-                        <button th:href="@{/login}" type="submit" class="btn btn-primary btn-block">Ai deja cont? Conecteaza-te</button>
+                        <button type="submit" class="btn btn-primary btn-block">Register</button>
+                        <a th:href="@{/login}" class="btn btn-primary btn-block">Ai deja cont? Conecteaza-te</a>
                     </form>
                 </div>
             </div>
@@ -104,19 +102,11 @@
 <!-- end footer section -->
 
 <!-- jQery -->
-<script src="../static/js/jquery-3.4.1.min.js"></script>
+<script src="../static/js/jquery-3.7.1.min.js"></script>
 <!-- bootstrap js -->
 <script src="../static/js/bootstrap.js"></script>
-<!-- nice select js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha256-Zr3vByTlMGQhvMfgkQ5BtWRSKBGa2QlspKYJnkjZTmo=" crossorigin="anonymous"></script>
 <!-- custom js -->
 <script src="../static/js/custom.js"></script>
-
-<script>
-    $(document).ready(function() {
-        $('select').niceSelect();
-    });
-</script>
 
 </body>
 
