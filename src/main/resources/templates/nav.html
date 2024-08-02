@@ -20,7 +20,7 @@
                             <a class="nav-link" th:href="@{/anunturi}">Anunturi</a>
                         </li>
                         <li th:if="${!#authentication.principal.anuntExist and #authentication.principal.authorities.contains('ROLE_MESERIAS')}" class="nav-item">
-                            <a class="nav-link" th:href="@{/anunturi/new}">Adaugă Anunț</a>
+                            <a class="nav-link" th:href="@{/adauga-anunturi}">Adaugă Anunț</a>
                         </li>
                         <li th:if="${#authentication.principal.anuntExist and #authentication.principal.authorities.contains('ROLE_MESERIAS')}" class="nav-item">
                             <a class="nav-link" th:href="@{/editare-anunturi}">Editare Anunț</a>
