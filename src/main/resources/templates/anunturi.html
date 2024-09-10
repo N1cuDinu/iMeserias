@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <!-- Basic -->
@@ -13,7 +14,6 @@
     <meta name="author" content="" />
 
     <title>iMeserias</title>
-
 
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.css" />
@@ -29,6 +29,65 @@
     <!-- responsive style -->
     <link href="../static/css/responsive.css" rel="stylesheet" />
 
+    <!-- Custom CSS for this page -->
+    <style>
+        .card-custom {
+            background-color: #343a40; /* Culoarea navbarului */
+            color: #ffffff; /* Culoare text albă pentru contrast */
+            border-radius: 10px;
+            padding: 15px; /* Micșorat padding-ul */
+            margin-bottom: 20px; /* Spațiu între carduri */
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15); /* Umbră redusă */
+            font-size: 0.95rem; /* Font puțin mai mic */
+        }
+
+        .card-custom h5 {
+            font-size: 1.3rem; /* Font puțin mai mic */
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .card-custom p {
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+        }
+
+        .btn-custom {
+            background-color: #6c757d; /* Culoare gri pentru buton */
+            color: #ffffff;
+            padding: 8px 16px; /* Reducerea padding-ului */
+            border-radius: 5px;
+            text-align: center;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Stiluri pentru selecturi */
+        .form-select-sm {
+            width: 32%;
+            padding: 5px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .heading_center {
+            margin-bottom: 20px;
+        }
+
+        .btn-box {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+
 </head>
 
 <body class="sub_page">
@@ -36,8 +95,7 @@
 <div th:replace="~{/navbar.html ::navbar}"></div>
 
 <!-- expert section -->
-
-<section class="expert_section layout_padding">
+<section class="expert_section layout_padding" style="padding-top: 20px;">
     <div th:if="${param.success}" class="alert alert-success">
         Inregistrare completa!
     </div>
@@ -45,72 +103,82 @@
         <div class="heading_container heading_center">
             <h2>Cauta meseriasi</h2>
             <form action="#" th:action="@{/search}" method="get">
-                <div class="row">
-                        <select class="form-select-sm nice-select"> <!--th:field="*{}"-->
-                            <option value="">Select Service</option>
-                            <!-- Iterează prin servicii disponibile -->
-                            <option th:each="serviciu : ${servicii}" th:value="${serviciu.id}" th:text="${serviciu.nume}"></option>
-                        </select>
-                        <select class="form-select-sm nice-select"> <!--th:field="*{localizare}"-->>
-                            <option value="">Select Location</option>
-                            <!-- Iterează prin localități disponibile -->
-                            <option th:each="loc : ${localitati}" th:value="${loc.id}" th:text="${loc.nume}"></option>
-                        </select>
-                        <select class="form-select-sm nice-select"> <!--th:field="*{reviewStars}"-->
-                            <option value="">Select Rating</option>
-                            <option value="1">1 Star</option>
-                            <option value="2">2 Stars</option>
-                            <option value="3">3 Stars</option>
-                            <option value="4">4 Stars</option>
-                            <option value="5">5 Stars</option>
-                        </select>
+                <div class="row justify-content-center">
+                    <select class="form-select-sm" name="service">
+                        <option value="">Select Service</option>
+                        <!-- Iterează prin servicii disponibile -->
+                        <option th:each="serviciu : ${serviciiFiltru}" th:value="${serviciu.idserviciu}" th:text="${serviciu.numeServiciu}"></option>
+                    </select>
+                    <select class="form-select-sm" name="location">
+                        <option value="">Select Location</option>
+                        <!-- Iterează prin localități disponibile -->
+                        <option th:each="loc : ${judetFiltru}" th:text="${loc}"></option>
+                    </select>
+                    <select class="form-select-sm" name="rating">
+                        <option value="">Select Rating</option>
+                        <option value="1">1 Star</option>
+                        <option value="2">2 Stars</option>
+                        <option value="3">3 Stars</option>
+                        <option value="4">4 Stars</option>
+                        <option value="5">5 Stars</option>
+                    </select>
                 </div>
-                <button type="submit" class="btn btn-primary">Search</button>
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
             </form>
         </div>
-            <div th:if="${anunturi.isEmpty()}" class="alert alert-info text-center">
-                <strong>Nu este nimic conform cerințelor dvs.</strong>
-            </div>
+        <div th:if="${anunturiPage.content.isEmpty()}" class="alert alert-info text-center">
+            <strong>Nu este nimic conform cerințelor dvs.</strong>
+        </div>
 
-            <div class="row" th:unless="${anunturi.isEmpty()}">
-                <div th:each="anunturi : ${anunturi}" class="col-md-6 col-lg-4 mx-auto">
-                    <div class="box">
-                        <div class="detail-box">
-                            <a th:href="@{'/meserias/' + ${anunturi.iduser}}">
-                                <h5 th:text="${anunturi.numeAnunt}">Nume Meseriaș</h5>
+        <div class="row" th:unless="${anunturiPage.content.isEmpty()}">
+            <div th:each="anunt : ${anunturiPage.content}" class="col-12">
+                <div class="card-custom">
+                    <div class="d-flex justify-content-between align-items-start"> <!-- Container flexibil pentru distribuirea conținutului -->
+                        <div> <!-- Secțiunea din stânga -->
+                            <a th:href="@{'/anunturi/view/' + ${anunt.idanunt}}">
+                                <h5 th:text="${anunt.numeAnunt}">Nume Meseriaș</h5>
                             </a>
-                            <p th:text="${anunturi.descriereAnunt}">Descriere...</p>
-                            <p th:text="${anunturi.localizare}">Localitate</p>
-                            <p th:text="${anunturi.numarTelefon}">Numar Telefon</p>
+                            <p th:text="${anunt.descriereAnunt}">Descriere...</p>
+                            <p><strong>Utilizator:</strong> <span th:text="${anunt.numeUtilizator}">Nume Utilizator</span></p>
+                            <p><strong>Serviciu oferit:</strong> <span th:text="${anunt.serviciu.numeServiciu}">Tip Serviciu</span></p>
+                            <p><strong>Localitate:</strong> <span th:text="${anunt.localizare}">Localitate</span></p>
+                            <p><strong>Număr Telefon:</strong> <span th:text="${anunt.numarTelefon}">Număr Telefon</span></p>
+                        </div>
+                        <div class="text-right" th:if="${recenziiAnunt != null}"> <!-- Secțiunea din dreapta -->
+                            <!-- Afișare buton de modificare sau lăsare recenzie în funcție de existența recenziei -->
+                            <div class="mt-3" th:if="${recenziiAnunt[anunt.idanunt] != null}">
+                                <a th:href="@{'/anunturi/review/edit/' + ${recenziiAnunt[anunt.idanunt].idreview}}" class="btn btn-warning">Modifică Recenzie</a>
+                            </div>
+                            <div class="mt-3" th:if="${recenziiAnunt[anunt.idanunt] == null}">
+                                <a th:href="@{'/anunturi/review/' + ${anunt.idanunt}}" class="btn btn-primary">Lasă un review</a>
+                            </div>
+
+                            <!-- Afișarea valorii reviewurilor -->
+                            <div class="mt-2">
+                                <p><strong>Rating mediu:</strong> <span th:text="${#numbers.formatDecimal(anunt.ratingMedie, 1, 2)}">0.0</span> din 5</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
+        <!-- Pagination -->
         <div class="btn-box">
-            <a href="">
-                Next Page
-            </a>
+            <a th:href="@{/anunturi(page=${anunturiPage.number - 1})}"
+               th:if="${anunturiPage.number > 0}" class="btn-custom">Previous Page</a>
+            <a th:href="@{/anunturi(page=${anunturiPage.number + 1})}"
+               th:if="${anunturiPage.number < anunturiPage.totalPages - 1}" class="btn-custom">Next Page</a>
         </div>
     </div>
 </section>
-
 <!-- end expert section -->
 
 <!-- info section -->
 <div th:replace="~{/navbar.html ::footer}"></div>
 <!-- end info_section -->
-
-<!-- footer section -->
-<footer class="footer_section">
-    <div class="container">
-        <p>
-            &copy; <span id="displayYear"></span> All Rights Reserved By
-            <a href="https://html.design/">Free Html Templates</a>
-        </p>
-    </div>
-</footer>
-<!-- footer section -->
 
 <!-- jQery -->
 <script src="../static/js/jquery-3.7.1.min.js"></script>
@@ -119,7 +187,5 @@
 <!-- custom js -->
 <script src="../static/js/custom.js"></script>
 
-
 </body>
-
 </html>

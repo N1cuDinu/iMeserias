@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ro">
+<head>
+    <title>Vizualizare Anunt</title>
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css" />
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+
+    <!-- font awesome style -->
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="/static/css/responsive.css" rel="stylesheet" />
+</head>
+<body class="sub_page">
+<div th:replace="~{/navbar.html ::navbar}"></div>
+<section class="layout_padding mx-auto w-50">
+    <div class="container">
+        <div class="heading_container heading_center">
+            <h2>Vizualizare Anunt</h2>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Anuntul tau</h5>
+                <p class="card-text"><strong>Nume Anunt:</strong> <span th:text="${anunt.numeAnunt}">Nume anunt aici</span></p>
+                <p class="card-text"><strong>Descriere:</strong> <span th:text="${anunt.descriereAnunt}">Descriere anunt aici</span></p>
+                <p class="card-text"><strong>Serviciu Oferit:</strong> <span th:text="${anunt.serviciu.numeServiciu}">Serviciu aici</span></p>
+                <p class="card-text"><strong>Localitate:</strong> <span th:text="${anunt.localizare}">Localitate aici</span></p>
+                <p class="card-text"><strong>Număr de Telefon:</strong> <span th:text="${anunt.numarTelefon}">Număr de telefon aici</span></p>
+
+                <!-- Afișare nota medie și număr recenzii -->
+                <p><strong>Rating mediu:</strong> <span th:text="${#numbers.formatDecimal(anunt.ratingMedie, 1, 2)}">0.0</span> din 5</p>
+                <p class="card-text"><strong>Număr Total Recenzii:</strong> <span th:text="${anunt.numarRecenzii}">0</span></p>
+            </div>
+        </div>
+
+        <!-- Butoanele pentru Stergere și Modificare -->
+        <div class="mt-4 text-center" th:if="${anunt.iduser} == ${utilizator.iduser}">
+            <a th:href="@{/anunturi/edit/{id}(id=${anunt.idanunt})}" class="btn btn-primary mr-2">Modifică</a>
+            <!-- Butonul Șterge -->
+            <button id="deleteButton" class="btn btn-danger" onclick="showConfirmation()">Șterge</button>
+
+            <!-- Butoanele de confirmare -->
+            <div id="confirmationButtons" class="mt-2" style="display: none;">
+                <form th:action="@{/anunturi/delete/{id}(id=${anunt.idanunt})}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger">DA</button>
+                </form>
+                <button type="button" class="btn btn-secondary" onclick="hideConfirmation()">NU</button>
+            </div>
+        </div>
+    </div>
+</section>
+<div th:replace="~{/navbar.html :: footer}"></div>
+
+<!-- jQery -->
+<script src="/static/js/jquery-3.7.1.min.js"></script>
+<!-- bootstrap js -->
+<script src="/static/js/bootstrap.js"></script>
+<!-- custom js -->
+<script src="/static/js/custom.js"></script>
+
+<script>
+    function showConfirmation() {
+        document.getElementById('deleteButton').style.display = 'none';
+        document.getElementById('confirmationButtons').style.display = 'inline-block';
+    }
+
+    function hideConfirmation() {
+        document.getElementById('deleteButton').style.display = 'inline-block';
+        document.getElementById('confirmationButtons').style.display = 'none';
+    }
+</script>
+</body>
+</html>

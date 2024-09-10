@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ro">
+<head>
+    <title>Gestionare Servicii</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+</head>
+<body>
+<div class="container mt-5">
+
+    <h1>Servicii</h1>
+    <div class="mt-3">
+        <button class="btn btn-secondary" onclick="history.back()">Înapoi</button>
+    </div>
+    <form method="post" th:action="@{/admin/servicii/add}">
+        <input type="text" name="numeServiciu" placeholder="Nume Serviciu" required>
+        <button type="submit" class="btn btn-primary">Adaugă Serviciu</button>
+    </form>
+    <table class="table mt-3">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nume Serviciu</th>
+            <th>Acțiuni</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="serviciu : ${servicii}">
+            <td th:text="${serviciu.idserviciu}"></td>
+            <td th:text="${serviciu.numeServiciu}"></td>
+            <td>
+                <form method="post" th:action="@{'/admin/servicii/delete/' + ${serviciu.idserviciu}}">
+                    <button type="submit" class="btn btn-danger">Șterge</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

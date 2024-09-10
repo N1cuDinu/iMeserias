@@ -1,137 +1,121 @@
-<div th:fragment="navbar" class="hero_area">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/">
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css" />
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+    <!-- font awesome style -->
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <!-- Custom styles for this template -->
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css"/>
+    <!-- responsive style -->
+    <link href="/static/css/responsive.css" rel="stylesheet" type="text/css"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .footer_section {
+            background-color: #343a40; /* Culoare identică cu navbar-ul */
+            color: #ffffff; /* Text alb pentru contrast */
+        }
+
+        .info_section {
+            background-color: #343a40; /* Culoare identică cu navbar-ul */
+            padding: 40px 0;
+            color: #ffffff; /* Text alb */
+        }
+
+        .info_section a, .info_section h4 {
+            color: #ffffff; /* Text alb */
+        }
+
+        .info_section a:hover {
+            color: #007bff; /* Albastru deschis pentru hover */
+        }
+    </style>
+</head>
+<div th:fragment="navbar">
     <!-- header section starts -->
-    <header class="header_section">
-        <div class="container-fluid">
-            <nav class="navbar navbar-expand-lg custom_nav-container ">
-                <a class="navbar-brand" href="index.html">
-                    <span>iMeserias</span>
-                </a>
-
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class=""> </span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/index}">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/anunturi}">Anunturi</a>
-                        </li>
-<!--                        <li th:if="${#authentication != null and #authentication.principal != null and !#authentication.principal.anuntExist and #authentication.principal.authorities.contains('ROLE_MESERIAS')}" class="nav-item">
-                            <a class="nav-link" th:href="@{/anunturi/new}">Adaugă Anunț</a>
-                        </li>
-                        <li th:if="${#authentication != null and #authentication.principal != null and #authentication.principal.anuntExist and #authentication.principal.authorities.contains('ROLE_MESERIAS')}" class="nav-item">
-                            <a class="nav-link" th:href="@{/editare-anunturi}">Editare Anunț</a>
-                        </li>-->
-                        <li th:if="${!#authentication.isAuthenticated()}" class="nav-item active">
-                            <a class="nav-link" th:href="@{/login}">Login</a>
-                        </li>
-                        <li th:if="${!#authentication.isAuthenticated()}" class="nav-item">
-                            <a class="nav-link" th:href="@{/register}">Sign Up</a>
-                        </li>
-                        <li th:if="${#authentication.isAuthenticated()}" class="nav-item">
-                            <a class="nav-link" th:href="@{/logout}">Logout</a>
-                        </li>
-                        <form class="form-inline">
-                            <button class="btn nav_search-btn" type="submit">
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                            </button>
-                        </form>
-                    </ul>
-                </div>
-            </nav>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="padding: 0 20px; font-size: 1.1rem; height: 60px;">
+        <a class="navbar-brand" th:href="@{/index}" style="font-weight: bold; font-size: 1.4rem;">iMeserias</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" href="javascript:void(0);" onclick="window.history.back()">Înapoi</a>
+                </li>
+                <!-- Linkuri vizibile doar utilizatorilor neautentificați -->
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
+                    <a class="nav-link" th:href="@{/login}">Login</a>
+                </li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
+                    <a class="nav-link" th:href="@{/register}">Register</a>
+                </li>
+                <!-- Linkuri vizibile tuturor utilizatorilor autentificați -->
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" th:href="@{/index}">Index</a>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" th:href="@{/anunturi}">Anunturi</a>
+                </li>
+                <!-- Link pentru utilizatorii ADMIN sau MESERIAS -->
+                <li class="nav-item" sec:authorize="hasAuthority('ADMIN') || hasAuthority('MESERIAS')">
+                    <a class="nav-link" th:if="${anuntExistNavbar}" th:href="@{/anunturi/view/{id}(id=${anuntIdNavbar})}">Vizualizeaza Anunt</a>
+                    <a class="nav-link" th:unless="${anuntExistNavbar}" th:href="@{/anunturi/new}">Adauga Anunt</a>
+                </li>
+                <!-- Link pentru utilizatorii ADMIN -->
+                <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+                    <a class="nav-link" th:href="@{/admin}">Admin Panel</a>
+                </li>
+                <!-- Link pentru utilizatorii cu rol de CLIENT -->
+                <li class="nav-item" sec:authorize="hasAuthority('CLIENT')">
+                    <a class="nav-link" th:href="@{/recenziile-mele}">Recenziile Mele</a>
+                </li>
+                <!-- Logout pentru toti utilizatorii autentificați -->
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
         </div>
-    </header>
+    </nav>
     <!-- end header section -->
 </div>
 
-
-
 <div th:fragment="footer">
-    <section class="info_section">
+    <section class="info_section bg-dark">
         <div class="container">
             <div class="row">
                 <div class="col-md-2 info_links">
-                    <h4>
-                        Menu
-                    </h4>
+                    <h4>Menu</h4>
                     <ul>
-                        <li>
-                            <a href="index.html">
-                                Home
-                            </a>
-                        </li>
-                        <li>
-                            <a href="about.html">
-                                About
-                            </a>
-                        </li>
-                        <li>
-                            <a href="job.html">
-                                Jobs
-                            </a>
-                        </li>
-                        <li>
-                            <a class="active" href="freelancer.html">
-                                Freelancers
-                            </a>
-                        </li>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="job.html">Anunturi</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">
-                    <h4>
-                        Jobs
-                    </h4>
-                    <p>
-                        Established fact that a reader will be distracted by the readable content of a page when looking at its
-                        layout. The point of using Lorem Ipsum
-                    </p>
-                </div>
-                <div class="col-md-3">
                     <div class="info_social">
-                        <h4>
-                            Social Link
-                        </h4>
+                        <h4>Social Link</h4>
                         <div class="social_container">
-                            <div>
-                                <a href="">
-                                    <i class="fa fa-facebook" aria-hidden="true"></i>
-                                </a>
-                            </div>
-                            <div>
-                                <a href="">
-                                    <i class="fa fa-twitter" aria-hidden="true"></i>
-                                </a>
-                            </div>
-                            <div>
-                                <a href="">
-                                    <i class="fa fa-linkedin" aria-hidden="true"></i>
-                                </a>
-                            </div>
-                            <div>
-                                <a href="">
-                                    <i class="fa fa-instagram" aria-hidden="true"></i>
-                                </a>
-                            </div>
+                            <div><a href=""><i class="fa fa-facebook" aria-hidden="true"></i></a></div>
+                            <div><a href=""><i class="fa fa-twitter" aria-hidden="true"></i></a></div>
+                            <div><a href=""><i class="fa fa-linkedin" aria-hidden="true"></i></a></div>
+                            <div><a href=""><i class="fa fa-instagram" aria-hidden="true"></i></a></div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="info_form">
-                        <h4>
-                            Newsletter
-                        </h4>
-                        <form action="">
-                            <input type="text" placeholder="Enter Your Email" />
-                            <button type="submit">
-                                Subscribe
-                            </button>
-                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 </div>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+<!-- jQuery -->
+<script src="../static/js/jquery-3.7.1.min.js"></script>
+<!-- bootstrap js -->
+<script src="../static/js/bootstrap.js"></script>
+</html>

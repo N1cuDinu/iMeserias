@@ -7,8 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
 
 @Builder
 @Data
@@ -20,35 +18,38 @@ public class Anunturi {
     @Id
     @Column(name = "idanunt")
     private int idanunt;
+
     @Basic
     @Column(name = "iduser")
     private int iduser;
+
     @Basic
     @Column(name = "numeAnunt")
     private String numeAnunt;
+
     @Basic
     @Column(name = "descriereAnunt")
     private String descriereAnunt;
-    @ManyToMany
-    @JoinTable(
-            name = "anunturi_servicii",
-            joinColumns = @JoinColumn(name = "idanunt"),
-            inverseJoinColumns = @JoinColumn(name = "idserviciu")
-    )
-    private Set<Servicii> servicii = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "idserviciu")
+    private Servicii serviciu;  // Un singur serviciu asociat cu anunțul
+
     @Basic
     @Column(name = "dataAdaugare")
     private Timestamp dataAdaugare;
+
     @Basic
     @Column(name = "dataActualizare")
     private Timestamp dataActualizare;
+
     @Basic
     @Column(name = "localizare")
     private int localizare;
+
     @Basic
     @Column(name = "numarTelefon")
     private String numarTelefon;
-
 
 
     public int getIdanunt() {
@@ -83,12 +84,12 @@ public class Anunturi {
         this.descriereAnunt = descriereAnunt;
     }
 
-    public Set<Servicii> getServicii() {
-        return servicii;
+    public Servicii getServicii() {
+        return serviciu;
     }
 
-    public void setServicii(Set<Servicii> servicii) {
-        this.servicii = servicii;
+    public void setServicii(Servicii servicii) {
+        this.serviciu = servicii;
     }
     public Timestamp getDataAdaugare() {
         return dataAdaugare;
@@ -106,7 +107,7 @@ public class Anunturi {
         this.dataActualizare = dataActualizare;
     }
 
-    public int getLocalizare() {
+    public long getLocalizare() {
         return localizare;
     }
 

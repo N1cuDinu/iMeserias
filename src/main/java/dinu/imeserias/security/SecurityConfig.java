@@ -36,8 +36,16 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/login", "/register", "/anunturi", "/static/**", "/css/**", "/js/**", "/images/**", "/register/save","/anunturi/new").permitAll()
-                        .requestMatchers("/anunturi/new", "/editare-anunt").hasAuthority("ROLE_MESERIAS")
+                        .requestMatchers( "/", "/index","/login", "/register", "/anunturi",
+                                "/anunturi/edit/**",
+                                "/anunturi/view/**", "/static/**", "/css/**", "/js/**",
+                                "/images/**", "/register/save").permitAll()
+                        .requestMatchers("/anunturi/new", "/editare-anunt").hasAnyAuthority("MESERIAS", "ADMIN")
+                        .requestMatchers("/anunturi/view/**").hasAnyAuthority("MESERIAS", "ADMIN", "UTILIZATOR")
+                        .requestMatchers("/anunturi/edit/**").hasAnyAuthority("MESERIAS", "ADMIN")
+                        .requestMatchers("/anunturi/delete/**").hasAnyAuthority("MESERIAS", "ADMIN")
+                        .requestMatchers("/anunturi/review/**").hasAnyAuthority("MESERIAS", "ADMIN", "UTILIZATOR")
+                        .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
                         .requestMatchers("/", "/index").anonymous()
                         .anyRequest().authenticated()
                 )

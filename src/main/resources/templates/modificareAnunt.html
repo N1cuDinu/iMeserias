@@ -1,37 +1,95 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ro">
 <head>
-    <!-- Restul head-ului -->
-    <title>Editare Anunț - iMeserias</title>
+    <title>Editare Anunt</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/static/css/style.css" rel="stylesheet" />
+    <link href="/static/css/responsive.css" rel="stylesheet" />
+
 </head>
 <body class="sub_page">
 <div th:replace="~{/navbar.html :: navbar}"></div>
-
-<section class="info_section layout_padding">
+<section class="layout_padding mx-auto w-50">
     <div class="container">
         <div class="heading_container heading_center">
-            <h2>Editare Anunț</h2>
+            <h2>Editare Anunt</h2>
         </div>
-        <form th:action="@{/editare-anunturi}" th:object="${anuntDto}" method="post">
-            <input type="hidden" th:field="*{idanunt}">
+        <form role="form" method="post" th:action="@{/anunturi/edit/{id}(id=${anunt.idanunt})}" th:object="${anunt}">
             <div class="form-group">
-                <label for="numeAnunt">Nume Anunț</label>
-                <input type="text" class="form-control" id="numeAnunt" th:field="*{numeAnunt}" placeholder="Introduceți numele anunțului">
+                <label for="titluAnunt">Titlul anuntului tau</label>
+                <input type="text" class="form-control" id="titluAnunt" name="titluAnunt" th:field="*{numeAnunt}">
             </div>
             <div class="form-group">
-                <label for="descriereAnunt">Descriere Anunț</label>
-                <textarea class="form-control" id="descriereAnunt" th:field="*{descriereAnunt}" placeholder="Descrierea anunțului"></textarea>
+                <label for="descriereAnunt">Descrierea anuntului tau</label>
+                <textarea class="form-control" id="descriereAnunt" name="descriereAnunt" th:field="*{descriereAnunt}"></textarea>
             </div>
             <div class="form-group">
-                <label for="numarTelefon">Număr de Telefon</label>
-                <input type="text" class="form-control" id="numarTelefon" th:field="*{numarTelefon}" placeholder="Număr de contact">
+                <label for="serviciu">Serviciul Oferit</label>
+                <select id="serviciu" name="serviciuId" class="form-control">
+                    <option th:each="serviciu : ${servicii}" th:value="${serviciu.idserviciu}" th:text="${serviciu.numeServiciu}" th:selected="${serviciu.idserviciu == anunt.serviciu.idserviciu}"></option>
+                </select>
             </div>
-            <button type="submit" class="btn btn-primary">Actualizează Anunț</button>
+            <div class="form-group">
+                <label for="judet">Judetul</label>
+                <select id="judet" name="judet" class="form-control">
+                    <option value="" disabled>Selectează un județ</option>
+                    <option th:each="judet : ${judete}" th:value="${judet}" th:text="${judet}" th:selected="${judet == județSelectat}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="localitate">Localitatea</label>
+                <select id="localitate" name="localitate" class="form-control">
+                    <!-- Localitățile vor fi populate din JavaScript -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="numarTelefon">Numarul de telefon</label>
+                <input type="tel" class="form-control" id="numarTelefon" name="numarTelefon" th:field="*{numarTelefon}">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Salvează Modificările</button>
         </form>
     </div>
 </section>
+<div th:replace="~{/navbar.html :: footer}"></div>
+<script src="/static/js/jquery-3.7.1.min.js"></script>
+<script src="/static/js/bootstrap.js"></script>
+<script src="/static/js/custom.js"></script>
 
-<div th:replace="~{/footer.html :: footer}"></div>
+<script>
+    $(document).ready(function() {
+        // Când selectăm un județ, se populează lista de localități
+        $('#judet').on('change', function() {
+            var selectedJudet = $(this).val();
+            $.ajax({
+                url: '/localitati',
+                type: 'GET',
+                data: { judet: selectedJudet },
+                success: function(localitati) {
+                    var localitateSelect = $('#localitate');
+                    localitateSelect.empty(); // Golește dropdown-ul
 
+                    // Adaugă opțiunile noi
+                    localitati.forEach(function(localitate) {
+                        localitateSelect.append(new Option(localitate, localitate));
+                    });
+
+                    // Selectează localitatea inițială dacă este setată
+                    var localitateSelectata = /*[[${localitateSelectată}]]*/ '';
+                    if (localitateSelectata) {
+                        localitateSelect.val(localitateSelectata);
+                    }
+                }
+            });
+        });
+
+        // Populează localitatea la încărcarea paginii dacă județul este deja selectat
+        var initialJudet = $('#judet').val();
+        if (initialJudet) {
+            $('#judet').trigger('change');
+        }
+    });
+</script>
 </body>
 </html>

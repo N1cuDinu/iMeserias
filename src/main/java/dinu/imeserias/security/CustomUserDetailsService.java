@@ -30,7 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found");
         }
         List<SimpleGrantedAuthority> authorities = Collections.singletonList(
-                new SimpleGrantedAuthority(RoluriEnum.valueOf(user.getTipUtilizator()).getAuthority())
+                new SimpleGrantedAuthority(RoluriEnum.valueOf(user.getTipUtilizator()).getNumeRol())
         );
         return new User(user.getUsername(), user.getPassword(), authorities);
     }

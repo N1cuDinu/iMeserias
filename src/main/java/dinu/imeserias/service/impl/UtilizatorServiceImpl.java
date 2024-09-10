@@ -20,12 +20,13 @@ import java.util.List;
 public class UtilizatorServiceImpl implements UtilizatorService {
     private UtilizatoriRepository utilizatoriRepository;
     private PasswordEncoder passwordEncoder;
-    TimeHelper timeHelper;
+    private TimeHelper timeHelper;
 
     @Autowired
-    public UtilizatorServiceImpl(UtilizatoriRepository utilizatoriRepository, PasswordEncoder passwordEncoder) {
+    public UtilizatorServiceImpl(UtilizatoriRepository utilizatoriRepository, PasswordEncoder passwordEncoder, TimeHelper timeHelper) {
         this.utilizatoriRepository = utilizatoriRepository;
         this.passwordEncoder = passwordEncoder;
+        this.timeHelper = timeHelper;
     }
 
     @Override

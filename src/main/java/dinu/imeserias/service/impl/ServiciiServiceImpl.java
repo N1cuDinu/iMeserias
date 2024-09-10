@@ -23,8 +23,18 @@ public class ServiciiServiceImpl implements ServiciiService {
         return serviciiRepository.findAll().stream().map(Servicii::getNumeServiciu).collect(Collectors.toList());
     }
 
+    public List<Servicii> findAllServiciu(){
+        return serviciiRepository.findAll();
+    }
+
     @Override
     public Servicii findById(int id) {
         return serviciiRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public List<Servicii> findAllServicii() {
+        return serviciiRepository.findAll();  // Apelează repository-ul pentru a obține toate serviciile
+    }
+
 }

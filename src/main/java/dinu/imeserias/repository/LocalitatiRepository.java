@@ -17,5 +17,5 @@ public interface LocalitatiRepository extends JpaRepository<Localitati, Long> {
     List<String> getLocalitatiByJudet(String judet);
 
     Localitati findLocalitatiByNume(String nume);
-
+    Localitati findLocalitatiByJudetAndNume(String judet, String nume);
 }

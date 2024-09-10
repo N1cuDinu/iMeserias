@@ -16,9 +16,12 @@ public class AnunturiDto {
     private int iduser;
     private String numeAnunt;
     private String descriereAnunt;
-    private Set<String> servicii;
+    private Servicii serviciu;  // Un singur serviciu
     private Timestamp dataAdaugare;
     private Timestamp dataActualizare;
-    private int localizare;
+    private String localizare;
     private String numarTelefon;
+    private String numeUtilizator;
+    private Double ratingMedie;
+    private int numarRecenzii;
 }

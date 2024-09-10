@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ro">
+<head>
+    <title>Gestionare Utilizatori</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+</head>
+<body>
+<div class="container mt-5">
+
+    <h1>Utilizatori</h1>
+    <div class="mt-3">
+        <button class="btn btn-secondary" onclick="history.back()">Înapoi</button>
+    </div>
+    <table class="table mt-3">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Rol</th>
+            <th>Acțiuni</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="utilizator : ${utilizatori}">
+            <td th:text="${utilizator.iduser}"></td>
+            <td th:text="${utilizator.email}"></td>
+            <td th:text="${utilizator.tipUtilizator}"></td>
+            <td>
+                <form method="post" th:action="@{'/admin/utilizatori/delete/' + ${utilizator.iduser}}">
+                    <button type="submit" class="btn btn-danger">Șterge</button>
+                </form>
+                <form method="post" th:action="@{'/admin/utilizatori/update-role/' + ${utilizator.iduser}}">
+                    <select name="rol">
+                        <option value="CLIENT">Client</option>
+                        <option value="MESERIAS">Meserias</option>
+                        <option value="ADMIN">Admin</option>
+                    </select>
+                    <button type="submit" class="btn btn-secondary">Modifică Rol</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

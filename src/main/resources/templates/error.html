@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Eroare</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/static/css/style.css" rel="stylesheet" />
+    <link href="/static/css/responsive.css" rel="stylesheet" />
+</head>
+<body>
+<div th:replace="~{/navbar.html ::navbar}"></div>
+<div class="sub_class">
+    <div class="alert alert-danger mt-5">
+        <h1>Oops! A apărut o eroare.</h1>
+        <p>Se pare că ceva nu a funcționat corect. Încercă să te întorci la pagina principală.</p>
+        <a class="btn btn-primary" th:href="@{/}">Home</a>
+    </div>
+</div>
+<div th:replace="~{/navbar.html ::footer}"></div>
+<!-- jQery -->
+<script src="../static/js/jquery-3.7.1.min.js"></script>
+<!-- bootstrap js -->
+<script src="../static/js/bootstrap.js"></script>
+<!-- custom js -->
+<script src="../static/js/custom.js"></script>
+</body>
+</html>

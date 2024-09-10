@@ -9,4 +9,5 @@ import java.util.List;
 public interface ServiciiService {
     List<String> findAllServiciiNames();
     Servicii findById(int id);
+    List<Servicii> findAllServicii();
 }

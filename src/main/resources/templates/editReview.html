@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ro">
+<head>
+    <title>Modificare Recenzie</title>
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css" />
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+
+    <!-- font awesome style -->
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="/static/css/responsive.css" rel="stylesheet" />
+</head>
+<body class="sub_page">
+<div th:replace="~{/navbar.html ::navbar}"></div>
+<section class="layout_padding mx-auto w-50">
+    <div class="container">
+        <div class="heading_container heading_center">
+            <h2>Modifică Recenzie</h2>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <form role="form" method="post" th:action="@{/anunturi/review/edit/{id}(id=${review.idreview})}" th:object="${review}">
+                    <div class="form-group">
+                        <label for="stars">Nota Recenzie</label>
+                        <select id="stars" name="stars" class="form-control" th:field="*{stars}">
+                            <option value="1" th:selected="${review.stars == 1}">1 Stea</option>
+                            <option value="2" th:selected="${review.stars == 2}">2 Stele</option>
+                            <option value="3" th:selected="${review.stars == 3}">3 Stele</option>
+                            <option value="4" th:selected="${review.stars == 4}">4 Stele</option>
+                            <option value="5" th:selected="${review.stars == 5}">5 Stele</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="descrierereview">Descriere Recenzie</label>
+                        <textarea id="descrierereview" name="descrierereview" class="form-control" rows="5" th:field="*{descrierereview}"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block mt-3">Salvează Modificările</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<div th:replace="~{/navbar.html ::footer}"></div>
+
+<!-- jQery -->
+<script src="/static/js/jquery-3.7.1.min.js"></script>
+<!-- bootstrap js -->
+<script src="/static/js/bootstrap.js"></script>
+<!-- custom js -->
+<script src="/static/js/custom.js"></script>
+</body>
+</html>

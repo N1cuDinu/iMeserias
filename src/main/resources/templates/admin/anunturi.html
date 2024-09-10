@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ro">
+<head>
+    <title>Gestionare Anunțuri</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Anunțuri</h1>
+    <div class="mt-3">
+        <button class="btn btn-secondary" onclick="history.back()">Înapoi</button>
+    </div>
+    <table class="table mt-3">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Titlu</th>
+            <th>Serviciu</th>
+            <th>Utilizator</th>
+            <th>Acțiuni</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="anunt : ${anunturi}">
+            <td th:text="${anunt.idanunt}"></td>
+            <td th:text="${anunt.numeAnunt}"></td>
+            <td th:text="${anunt.serviciu.numeServiciu}"></td>
+            <td th:text="${anunt.iduser}"></td>
+            <td>
+                <form method="post" th:action="@{'/admin/anunturi/delete/' + ${anunt.iduser}}">
+                    <button type="submit" class="btn btn-danger">Șterge</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>
